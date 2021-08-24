@@ -6,35 +6,20 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/24 00:12:18 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/08/24 09:47:09 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "ft_printf.h"
 
-static unsigned char	two_pow(unsigned char pow)
-{
-	unsigned char	result;
-
-	if (pow == 0)
-		return (1);
-	result = 2;
-	pow--;
-	while (pow)
-	{
-		result = result * 2;
-		pow--;
-	}
-	return (result);
-}
-
 static void	bin_to_char(char bin)
 {
 	static unsigned char	c;
 	static unsigned char	pow;
+	static unsigned char	two_pow[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 
-	c = c + (bin * two_pow(pow));
+	c = c + (bin * two_pow[pow]);
 	pow++;
 	if (pow == 8)
 	{

@@ -1,5 +1,7 @@
-client
 server
+server_bonus
+client
+client_bonus
 
 # Prerequisites
 *.d

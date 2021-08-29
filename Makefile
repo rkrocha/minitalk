@@ -6,22 +6,14 @@
 #    By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 09:26:56 by rkochhan          #+#    #+#              #
-#    Updated: 2021/08/24 08:57:09 by rkochhan         ###   ########.fr        #
+#    Updated: 2021/08/29 11:01:03 by rkochhan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minitalk
 
-SERVER_NAME	= server
-SERVER_SRC	= server.c
-SERVER_OBJ	= $(SERVER_SRC:.c=.o)
-
-CLIENT_NAME	= client
-CLIENT_SRC	= client.c
-CLIENT_OBJ	= $(CLIENT_SRC:.c=.o)
-
-FT_PRINTF	= ./ft_printf/
-LIBFT		= ./ft_printf/libft/
+FT_PRINTF	= ft_printf
+LIBFT		= ft_printf/libft
 INCLUDE		= -I. -I$(LIBFT) -I$(FT_PRINTF)
 LIBS		= -L$(FT_PRINTF) -lftprintf
 
@@ -29,31 +21,46 @@ CC		= clang
 
 C_FLAGS	= -Wall -Werror -Wextra
 
+
 .c.o:
 	$(CC) $(C_FLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
 
-$(NAME): $(SERVER_NAME) $(CLIENT_NAME)
+$(NAME): server client
 
-$(SERVER_NAME): $(SERVER_OBJ)
+server: server.o
 	@ make -s -C $(FT_PRINTF)
-	@ $(CC) $(C_FLAGS) $(SERVER_OBJ) $(INCLUDE) $(LIBS) -o $(SERVER_NAME)
-	@ echo "Made $(value SERVER_NAME)"
+	@ $(CC) $(C_FLAGS) server.o $(INCLUDE) $(LIBS) -o server
+	@ echo "Made server"
 
-$(CLIENT_NAME): $(CLIENT_OBJ)
+client: client.o
 	@ make -s -C $(FT_PRINTF)
-	@ $(CC) $(C_FLAGS) $(CLIENT_OBJ) $(INCLUDE) $(LIBS) -o $(CLIENT_NAME)
-	@ echo "Made $(value CLIENT_NAME)"
+	@ $(CC) $(C_FLAGS) client.o $(INCLUDE) $(LIBS) -o client
+	@ echo "Made client"
+
+
+bonus: server_bonus client_bonus
+
+server_bonus: server_bonus.o
+	@ make -s -C $(FT_PRINTF)
+	@ $(CC) $(C_FLAGS) server_bonus.o $(INCLUDE) $(LIBS) -o server_bonus
+	@ echo "Made server"
+
+client_bonus: client_bonus.o
+	@ make -s -C $(FT_PRINTF)
+	@ $(CC) $(C_FLAGS) client_bonus.o $(INCLUDE) $(LIBS) -o client_bonus
+	@ echo "Made client"
+
 
 all: $(NAME)
 
 clean:
 	@ make -s clean -C $(FT_PRINTF)
-	@ rm -rf $(SERVER_OBJ) $(CLIENT_OBJ)
+	@ rm -rf server.o client.o server_bonus.o client_bonus.o
 
 fclean: clean
 	@ make -s fclean -C $(FT_PRINTF)
-	@ rm -rf $(SERVER_NAME) $(CLIENT_NAME)
+	@ rm -rf server client server_bonus client_bonus
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

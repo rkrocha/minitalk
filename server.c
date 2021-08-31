@@ -6,26 +6,26 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/29 10:23:00 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/08/30 21:17:21 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "ft_printf.h"
 
-static void	bin_to_char(char bin)
+static void	bin_to_char(unsigned char bin)
 {
 	static unsigned char	c;
 	static unsigned char	pow;
 	static unsigned char	two_pow[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 
-	c = c + (bin * two_pow[pow]);
+	c += bin * two_pow[pow];
 	pow++;
-	if (pow == 7)
+	if (pow == 8)
 	{
-		ft_putchar(c);
+		write(1, &c, 1);
 		if (c == '\0')
-			ft_putchar('\n');
+			write(1, "\n", 1);
 		pow = 0;
 		c = 0;
 	}

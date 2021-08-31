@@ -6,7 +6,7 @@
 #    By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 09:26:56 by rkochhan          #+#    #+#              #
-#    Updated: 2021/08/29 11:01:03 by rkochhan         ###   ########.fr        #
+#    Updated: 2021/08/31 11:15:11 by rkochhan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,12 +43,12 @@ bonus: server_bonus client_bonus
 server_bonus: server_bonus.o
 	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) server_bonus.o $(INCLUDE) $(LIBS) -o server_bonus
-	@ echo "Made server"
+	@ echo "Made server_bonus"
 
 client_bonus: client_bonus.o
 	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) client_bonus.o $(INCLUDE) $(LIBS) -o client_bonus
-	@ echo "Made client"
+	@ echo "Made client_bonus"
 
 
 all: $(NAME)

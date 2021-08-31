@@ -6,7 +6,7 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/30 21:47:46 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/08/31 11:22:15 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,27 @@ static void	send_str_as_binary(const char *str, pid_t server_pid)
 		while (i < 8)
 		{
 			func_ptr[(c & 0x01)](server_pid);
-			usleep(DELAY);
 			c = c >> 1;
 			i++;
+			usleep(DELAY);
 		}
 		str++;
 	}
 	while (i > 0)
 	{
 		send_bin_zero(server_pid);
-		usleep(DELAY);
 		i--;
+		usleep(DELAY);
 	}
+	sleep(1);
+	ft_printf("Timed out\n");
 }
 
 static void	catch_server_response(int sig_num)
 {
 	if (sig_num == SIGUSR2)
 		return ;
-	ft_printf("Server ACK\n");
+	ft_printf("Server ack: end of transmission\n");
 	exit(0);
 }
 

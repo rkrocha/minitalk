@@ -6,34 +6,12 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/30 21:52:43 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/08/31 11:20:24 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "ft_printf.h"
-
-#define BUFFER_SIZE	1024
-
-static void	write_and_ack(unsigned char c, pid_t client_pid)
-{
-	static char	buffer[BUFFER_SIZE];
-	static int	len;
-
-	buffer[len] = c;
-	len++;
-	if (c == '\0' || len == BUFFER_SIZE - 1)
-	{
-		buffer[len] = '\0';
-		write(1, buffer, len);
-		len = 0;
-		if (c == '\0')
-		{
-			write(1, "\n", 1);
-			kill(client_pid, SIGUSR1);
-		}
-	}
-}
 
 static void	bin_to_char(unsigned char bin, pid_t client_pid)
 {
@@ -45,7 +23,12 @@ static void	bin_to_char(unsigned char bin, pid_t client_pid)
 	pow++;
 	if (pow == 8)
 	{
-		write_and_ack(c, client_pid);
+		write(1, &c, 1);
+		if (c == '\0')
+		{
+			write(1, "\n", 1);
+			kill(client_pid, SIGUSR1);
+		}
 		pow = 0;
 		c = 0;
 	}

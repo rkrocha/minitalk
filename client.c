@@ -13,7 +13,7 @@
 #include <signal.h>
 #include "ft_printf.h"
 
-#define DELAY	500
+#define DELAY	3000
 
 static void	send_bin_one(pid_t server_pid)
 {

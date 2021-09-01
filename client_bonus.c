@@ -13,16 +13,16 @@
 #include <signal.h>
 #include "ft_printf.h"
 
-#define DELAY	500
-
 static void	send_bin_one(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR2);
+	usleep(10000);
 }
 
 static void	send_bin_zero(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR1);
+	usleep(10000);
 }
 
 static void	send_str_as_binary(const char *str, pid_t server_pid)
@@ -40,7 +40,6 @@ static void	send_str_as_binary(const char *str, pid_t server_pid)
 			func_ptr[(c & 0x01)](server_pid);
 			c = c >> 1;
 			i++;
-			usleep(DELAY);
 		}
 		str++;
 	}
@@ -48,9 +47,8 @@ static void	send_str_as_binary(const char *str, pid_t server_pid)
 	{
 		send_bin_zero(server_pid);
 		i--;
-		usleep(DELAY);
 	}
-	sleep(1);
+	usleep(10000);
 	ft_printf("Timed out\n");
 }
 

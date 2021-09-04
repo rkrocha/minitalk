@@ -6,23 +6,25 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/09/03 11:53:51 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/09/04 09:02:15 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "ft_printf.h"
 
+#define DELAY	10000
+
 static void	send_bin_one(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR2);
-	usleep(10000);
+	usleep(DELAY);
 }
 
 static void	send_bin_zero(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR1);
-	usleep(10000);
+	usleep(DELAY);
 }
 
 static void	send_str_as_binary(const char *str, pid_t server_pid)

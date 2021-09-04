@@ -6,7 +6,7 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/31 11:22:15 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/09/03 11:53:51 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,24 @@ static void	send_str_as_binary(const char *str, pid_t server_pid)
 {
 	unsigned char		i;
 	unsigned char		c;
+	size_t				len;
 	static void (*const	func_ptr[2])(pid_t) = {send_bin_zero, send_bin_one};
 
-	while (*str)
+	len = ft_strlen(str) + 1;
+	while (len)
 	{
 		i = 0;
 		c = *str;
 		while (i < 8)
 		{
-			func_ptr[(c & 0x01)](server_pid);
+			func_ptr[(c & 1)](server_pid);
 			c = c >> 1;
 			i++;
 		}
 		str++;
+		len--;
 	}
-	while (i > 0)
-	{
-		send_bin_zero(server_pid);
-		i--;
-	}
-	usleep(10000);
+	sleep(1);
 	ft_printf("Timed out\n");
 }
 

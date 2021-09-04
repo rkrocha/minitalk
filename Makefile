@@ -6,7 +6,7 @@
 #    By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 09:26:56 by rkochhan          #+#    #+#              #
-#    Updated: 2021/08/31 11:15:11 by rkochhan         ###   ########.fr        #
+#    Updated: 2021/09/03 11:54:26 by rkochhan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,33 +25,35 @@ C_FLAGS	= -Wall -Werror -Wextra
 .c.o:
 	$(CC) $(C_FLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
 
-$(NAME): server client
+
+$(NAME): libftprintf server client
 
 server: server.o
-	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) server.o $(INCLUDE) $(LIBS) -o server
 	@ echo "Made server"
 
 client: client.o
-	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) client.o $(INCLUDE) $(LIBS) -o client
 	@ echo "Made client"
 
 
-bonus: server_bonus client_bonus
+bonus: libftprintf server_bonus client_bonus
 
 server_bonus: server_bonus.o
-	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) server_bonus.o $(INCLUDE) $(LIBS) -o server_bonus
 	@ echo "Made server_bonus"
 
 client_bonus: client_bonus.o
-	@ make -s -C $(FT_PRINTF)
 	@ $(CC) $(C_FLAGS) client_bonus.o $(INCLUDE) $(LIBS) -o client_bonus
 	@ echo "Made client_bonus"
 
 
+libftprintf:
+	@ make -s -C $(FT_PRINTF)
+
+
 all: $(NAME)
+
 
 clean:
 	@ make -s clean -C $(FT_PRINTF)

@@ -6,18 +6,18 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/30 21:17:21 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/09/03 09:27:04 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "ft_printf.h"
 
-static void	bin_to_char(unsigned char bin)
+static void	bin_to_char(bool bin)
 {
-	static unsigned char	c;
-	static unsigned char	pow;
-	static unsigned char	two_pow[8] = {1, 2, 4, 8, 16, 32, 64, 128};
+	static unsigned char		c;
+	static unsigned char		pow;
+	static const unsigned char	two_pow[8] = {1, 2, 4, 8, 16, 32, 64, 128};
 
 	c += bin * two_pow[pow];
 	pow++;

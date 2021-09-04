@@ -6,7 +6,7 @@
 /*   By: rkochhan <rkochhan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:10:12 by rkochhan          #+#    #+#             */
-/*   Updated: 2021/08/30 21:27:20 by rkochhan         ###   ########.fr       */
+/*   Updated: 2021/09/04 08:33:39 by rkochhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,35 @@
 static void	send_bin_one(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR2);
+	usleep(DELAY);
 }
 
 static void	send_bin_zero(pid_t server_pid)
 {
 	kill(server_pid, SIGUSR1);
+	usleep(DELAY);
 }
 
 static void	send_str_as_binary(const char *str, pid_t server_pid)
 {
 	unsigned char		i;
 	unsigned char		c;
+	size_t				len;
 	static void (*const	func_ptr[2])(pid_t) = {send_bin_zero, send_bin_one};
 
-	while (*str)
+	len = ft_strlen(str) + 1;
+	while (len)
 	{
 		i = 0;
 		c = *str;
 		while (i < 8)
 		{
-			func_ptr[(c & 0x01)](server_pid);
-			usleep(DELAY);
+			func_ptr[(c & 1)](server_pid);
 			c = c >> 1;
 			i++;
 		}
 		str++;
-	}
-	while (i > 0)
-	{
-		send_bin_zero(server_pid);
-		usleep(DELAY);
-		i--;
+		len--;
 	}
 }
 
